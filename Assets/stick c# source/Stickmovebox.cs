@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 public class Stickmovebox : MonoBehaviour
 {
-
+    public AudioClip destroySound;
 
     void Start()
     {
@@ -18,8 +18,6 @@ public class Stickmovebox : MonoBehaviour
         {
             Destroy(gameObject);
             SceneManager.LoadScene("restart_scene_stick");
-
         }
-
     }
  }

@@ -12,7 +12,6 @@ public class Stick : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         if (StickCreator.Start_time <= 0)
         {
             if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x > -5)
@@ -25,6 +24,10 @@ public class Stick : MonoBehaviour {
             }
         }
         
+        if (InputNetworkingManager.isConnected())
+        {
+
+        }        
     }
 
     private void OnCollisionEnter(Collision col){

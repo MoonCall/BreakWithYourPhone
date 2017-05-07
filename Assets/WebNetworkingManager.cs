@@ -32,12 +32,6 @@ public class WebNetworkingManager : MonoBehaviour {
             HttpListenerContext context = listener.GetContext();
             HttpListenerRequest request = context.Request;
             HttpListenerResponse response = context.Response;
-            /*
-            if (request.RawUrl.Substring(1) == "favicon.ico")
-            {
-                string favicon = 
-            }
-            */
 
             if (!System.IO.File.Exists(responseBodyPath))
                 Debug.LogError("responseBody not found");

@@ -7,6 +7,7 @@
 
 	<body>
         <button onclick="connectInputServer()"> Connect Input Server </button> <br>
+        <button onclick="calibrate()"> Calibrate </button> <br>
 	    x: <p id="x"></p>
 	    y: <p id="y"></p>
 	    z: <p id="z"></p>
@@ -59,30 +60,40 @@
 		    document.getElementById("gamma_o").innerHTML = aGammaO;
 	    }
 
-	    if (window.DeviceMotionEvent == undefined) {
-		    //No accelerometer is present. Use buttons.
-		    alert("no accelerometer exists");
-	    }
-	    else {
-		    window.addEventListener("devicemotion", accelerometerUpdate, true);
-		    window.addEventListener("deviceorientation", directionUpdate, true);
-	    }
-
 	    var socketOpen = false;
 	    var ws;
+	    var calibrated = false;
+	    function calibrate() {
+	        if (window.DeviceMotionEvent == undefined) {
+	            //No accelerometer is present. Use buttons.
+	            alert("no accelerometer exists");
+	        }
+	        else if (!calibrated && socketOpen) {
+	            window.addEventListener("devicemotion", accelerometerUpdate, true);
+	            window.addEventListener("deviceorientation", directionUpdate, true);
+	            setTimeout(function () {
+	                calibrated = true;
+	                ws.send("calibrate");
+	            }, 1000);
+	        }
+	    }
 
 	    function updateSensorInfo () {
 	        setTimeout(function () {
-	            if (aX != null && aY != null && aZ != null && aAlphaO != null && aBetaO != null && aGammaO != null) {
-	                ws.send(aX + "," + aY + "," + aZ + "," + aAlphaO + "," + aBetaO + "," + aGammaO);
-	                updateSensorInfo();
+	            if (calibrated) {
+	                if (aX != null && aY != null && aZ != null && aAlphaO != null && aBetaO != null && aGammaO != null) {
+	                    ws.send(aX + "," + aY + "," + aZ + "," + aAlphaO + "," + aBetaO + "," + aGammaO);
+	                    updateSensorInfo();
+	                }
+	                else {
+	                    alert("Your device does not support devicemotion (which provide sensor information)")
+	                    ws.close();
+	                }
 	            }
 	            else {
-	                alert("Your device does not support devicemotion (which provide sensor information)")
-	                ws.close();
+	                updateSensorInfo();
 	            }
-
-	        }, 50)
+	        }, 50);
 	    }
 	    
 	    function connectInputServer() {
