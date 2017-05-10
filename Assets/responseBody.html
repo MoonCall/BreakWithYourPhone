@@ -108,7 +108,7 @@
 	                socketOpen = false;
 	            };
 	        }
-	        else {
+	        else if (!socketOpen) {
 	            alert("WebSocket is not supported in your browser!");
 	        }
 	    }

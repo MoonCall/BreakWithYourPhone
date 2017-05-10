@@ -48,7 +48,7 @@ public class CalibrationManager : MonoBehaviour {
         }
         else
         {
-            if (instructionImage.active)
+            if (instructionImage.activeSelf)
                 instructionImage.SetActive(false);
         }
         /*

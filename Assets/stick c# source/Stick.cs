@@ -26,7 +26,8 @@ public class Stick : MonoBehaviour {
         
         if (InputNetworkingManager.isConnected())
         {
-
+            gameObject.transform.eulerAngles = new Vector3(90.0f - InputNetworkingManager.beta, 0f, InputNetworkingManager.alpha);
+            gameObject.transform.position = new Vector3(InputNetworkingManager.x / 16.0f, InputNetworkingManager.y / 16.0f, InputNetworkingManager.z / 16.0f);
         }        
     }
 

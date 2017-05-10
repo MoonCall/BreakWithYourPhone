@@ -13,11 +13,11 @@ public class Stickmovebox : MonoBehaviour
     void Update()
     {
         gameObject.transform.position -= new Vector3(0f, 0f, 1f);
-
+        
         if (transform.position.z < -8)
         {
             Destroy(gameObject);
-            SceneManager.LoadScene("restart_scene_stick");
+            // SceneManager.LoadScene("restart_scene_stick");
         }
     }
  }

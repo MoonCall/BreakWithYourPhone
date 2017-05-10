@@ -30,7 +30,7 @@ public class InputNetworkingManager : MonoBehaviour {
 
         protected override void OnMessage(MessageEventArgs e)
         {
-            if (e.Data == "calibrate")
+            if (!CalibrationManager.isCalibrated() && e.Data == "calibrate")
             {
                 CalibrationManager.setCalibrationOnProgress(false);
                 CalibrationManager.setCalibrationDone();
@@ -45,7 +45,7 @@ public class InputNetworkingManager : MonoBehaviour {
                 alpha = float.Parse(sensor_info[3]);
                 beta = float.Parse(sensor_info[4]);
                 gamma = float.Parse(sensor_info[5]);
-                Debug.Log("Data Received: " + x + "/" + y + "/" + z + "/" + alpha + "/" + beta + "/" + gamma);
+                //Debug.Log("Data Received: " + x + "/" + y + "/" + z + "/" + alpha + "/" + beta + "/" + gamma);
             }
         }
 
