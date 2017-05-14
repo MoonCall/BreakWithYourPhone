@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{AFC040CD-DBEA-2CA7-0DF2-1A18000B271D}</ProjectGuid>
+    <ProjectGuid>{4F151CD0-008C-10CD-B904-E8272BEA919C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -46,17 +46,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\C# source\Creator.cs" />
-     <Compile Include="Assets\C# source\buttons.cs" />
-     <Compile Include="Assets\C# source\killler.cs" />
-     <Compile Include="Assets\C# source\movebox.cs" />
-     <Compile Include="Assets\C# source\restart.cs" />
+     <Compile Include="Assets\CalibrationManager.cs" />
+     <Compile Include="Assets\InputNetworkingManager.cs" />
+     <Compile Include="Assets\WebNetworkingManager.cs" />
+     <Compile Include="Assets\stick c# source\StartSceneManager.cs" />
      <Compile Include="Assets\stick c# source\Stick.cs" />
      <Compile Include="Assets\stick c# source\StickCreator.cs" />
      <Compile Include="Assets\stick c# source\Stickbuttons.cs" />
      <Compile Include="Assets\stick c# source\Stickmovebox.cs" />
      <Compile Include="Assets\stick c# source\Stickrestart.cs" />
+     <None Include="Assets\Materials\Brick Substance\Documentation\Help.txt" />
      <None Include="Assets\KajamansRoads\FileNamesDescription.txt" />
+     <None Include="Assets\Materials\Brick Substance\Documentation\Eula.txt" />
      <None Include="Assets\KajamansRoads\Free\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -78,6 +79,9 @@
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="websocket-sharp">
+ <HintPath>C:/Users/LeeJihyeon/Downloads/뉴폴더/BreakWithYourPhone-master/Assets/Plugins/websocket-sharp.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

@@ -1,25 +1,79 @@
 <html>
 	<head>
 	<title> Test on Accelarometer </title>
+	<style>
+        tr:nth-child(even) {background-color: #f2f2f2}
+        th, td {
+        border-bottom: 1px solid #ddd;
+        }
+
+        th {
+        background-color: #004CAF;
+        color: white;
+        }
+	</style>
 	</head>
-
-
-
 	<body>
-        <button onclick="connectInputServer()"> Connect Input Server </button> <br>
-        <button onclick="calibrate()"> Calibrate </button> <br>
-	    x: <p id="x"></p>
-	    y: <p id="y"></p>
-	    z: <p id="z"></p>
-	    alpha: <p id="alpha"></p>
-	    beta: <p id="beta"></p>
-	    gamma: <p id="gamma"></p>
-	    alpha_o: <p id="alpha_o"></p>
-	    beta_o: <p id="beta_o"></p>
-	    gamma_o: <p id="gamma_o"></p>
+      <!-- interface for connect, calibrate and showing sensor information -->
+      <h2> Input Server Connection Manager </h2>
+      <h5>
+      [1] connect to input Server. <br>
+      [2] calibrate <br>
+      </h5>
+      <table>
+        <tr>
+          <th>Connect Input Server</th>
+          <td>
+            <button onclick="connectInputServer()"> Connect </button>
+          </td>
+        </tr>
+        <tr>
+          <th>Calibrate</th>
+          <td>
+            <button onclick="calibrate()"> Calibrate </button> <br>
+          </td>
+        </tr>
+        <tr>
+          <th>x</th>
+          <td>
+            <p id="x"></p>
+          </td>
+        </tr>
+        <tr>
+          <th>y</th>
+          <td>
+            <p id="y"></p>
+          </td>
+        </tr>
+        <tr>
+          <th>z</th>
+          <td>
+            <p id="z"></p>
+          </td>
+        </tr>
+        <tr>
+          <th>alpha_o</th>
+          <td>
+            <p id="alpha_o"></p>
+          </td>
+        </tr>
+        <tr>
+          <th>beta_o</th>
+          <td>
+            <p id="beta_o"></p>
+          </td>
+        </tr>
+        <tr>
+          <th>gamma_o</th>
+          <td>
+            <p id="gamma_o"></p>
+          </td>
+        </tr>
+      </table>
 	</body>
 
     <script>
+        // variable to store sensor information
         var aX;
         var aY;
         var aZ;
@@ -27,19 +81,11 @@
         var aBetaO;
         var aGammaO;
 
+        // get sensor information from devicemotion, then store data and show them on page
 	    function accelerometerUpdate(e) {
 		    aX = event.acceleration.x;
 		    aY = event.acceleration.y;
 		    aZ = event.acceleration.z;
-
-		    var aAlpha = event.rotationRate.alpha*1;
-		    var aBeta = event.rotationRate.beta*1;
-		    var aGamma = event.rotationRate.gamma*1;
-		    //The following two lines are just to calculate a
-		    // tilt. Not really needed.
-
-		    //xPosition = Math.atan2(aY, aZ);
-		    //yPosition = Math.atan2(aX, aZ);
 
 		    document.getElementById("x").innerHTML = aX;
 		    document.getElementById("y").innerHTML = aY;
@@ -50,6 +96,7 @@
 		    document.getElementById("gamma").innerHTML = aGamma;
 	    }
 
+        // get sensor information from deviceorientation, then store data and show them on page
 	    function directionUpdate(e) {
 		    aAlphaO = event.alpha;
 		    aBetaO = event.beta;
@@ -60,25 +107,34 @@
 		    document.getElementById("gamma_o").innerHTML = aGammaO;
 	    }
 
+        // socket connection status & calibration status
 	    var socketOpen = false;
-	    var ws;
 	    var calibrated = false;
+	    var ws; // web socket
+	    
+        // execute calibration and update status of calibration
 	    function calibrate() {
 	        if (window.DeviceMotionEvent == undefined) {
-	            //No accelerometer is present. Use buttons.
 	            alert("no accelerometer exists");
 	        }
 	        else if (!calibrated && socketOpen) {
+                // initialize eventListener adjusting to current acceleration
 	            window.addEventListener("devicemotion", accelerometerUpdate, true);
 	            window.addEventListener("deviceorientation", directionUpdate, true);
+                // send calibrate command to program after one second (time interval needed for eventListener initialization)
 	            setTimeout(function () {
 	                calibrated = true;
 	                ws.send("calibrate");
 	            }, 1000);
 	        }
+          else {
+            alert("Already calbirated or socket is not open yet");
+          }
 	    }
 
-	    function updateSensorInfo () {
+        // send information to program
+	    function updateSensorInfo() {
+            // send sensor information using web socket periodically (if calibration done)
 	        setTimeout(function () {
 	            if (calibrated) {
 	                if (aX != null && aY != null && aZ != null && aAlphaO != null && aBetaO != null && aGammaO != null) {
@@ -86,7 +142,7 @@
 	                    updateSensorInfo();
 	                }
 	                else {
-	                    alert("Your device does not support devicemotion (which provide sensor information)")
+	                    alert("Your device does not support devicemotion (which provides sensor information)")
 	                    ws.close();
 	                }
 	            }
@@ -95,7 +151,8 @@
 	            }
 	        }, 50);
 	    }
-	    
+
+        // open web socket and connect to application's web socket server
 	    function connectInputServer() {
 	        if ("WebSocket" in window && !socketOpen) {
 	            var ip = "REPLACE_THIS_IP_ADDR";
@@ -110,6 +167,9 @@
 	        }
 	        else if (!socketOpen) {
 	            alert("WebSocket is not supported in your browser!");
+	        }
+	        else {
+	            alert("WebSocket is already open");
 	        }
 	    }
     </script>
