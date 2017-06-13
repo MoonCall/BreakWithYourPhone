@@ -60,3 +60,8 @@ Move your stick to break obstacle, and get score for each destructed obstacle.
 
 
 ![Image of game play scene](https://github.com/MoonCall/BreakWithYourPhone/blob/master/readme_image/move.png?raw=true)
+
+
+### DEMO
+
+[![BreakWithYourPhone](https://img.youtube.com/vi/XWoY7LevwKg/0.jpg)](https://www.youtube.com/watch?v=XWoY7LevwKg)
